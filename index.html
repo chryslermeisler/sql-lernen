@@ -296,6 +296,41 @@ pre{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .cardq .mark{grid-column:2;grid-row:1 / span 2;align-self:center}
   main{padding:6px 10px 60px}
 }
+
+/* ============================================================
+   LERNEN + RÜCKBLICK: REMAINING OVERFLOW FIXES
+   ============================================================ */
+
+/* K4, K6, K9, R2, R3, R4 and other bare tables not inside .tbl-wrap:
+   make them independently scrollable so they never push the body wider. */
+:not(.tbl-wrap) > table.data{
+  display:block;
+  overflow-x:auto;
+  max-width:100%;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Global overflow-wrap safety net: prevents any single long token
+   (URL, SQL keyword run, schema name) from forcing page-level overflow.
+   Only activates when there is no other break opportunity. */
+p,li,td,th,.warn,.tip,.merke,.note,.chapter,.task{
+  overflow-wrap:break-word;
+}
+
+/* Monospace schema paragraphs (K5 Kunde/Artikel/Bestellung,
+   K7 Messstation, K8 Nutzer/Gruppe): allow line-break anywhere needed */
+.chapter p[style*="font-family"]{
+  overflow-wrap:break-word;
+  word-break:break-word;
+}
+
+/* tables-row: cap to container so flex items can't widen the page */
+.tables-row{max-width:100%}
+
+/* R4 inline pre next to table: release forced min-width on small screens */
+@media(max-width:599px){
+  .tables-row>pre{min-width:0!important;flex-basis:100%}
+}
 </style>
 </head>
 <body>
