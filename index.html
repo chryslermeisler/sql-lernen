@@ -223,6 +223,79 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 10px}
   .cheat{columns:2}
   .cheat .blk{border:1px solid #999}
 }
+  /* ============================================================
+   MOBILE-FIRST RESPONSIVE IMPROVEMENTS
+   ============================================================ */
+
+/* Touch-friendly tap targets (global, 44px min per WCAG) */
+.btn{min-height:44px}
+.btn.small{min-height:36px}
+nav.tabs button{min-height:44px}
+.tlist button{min-height:44px}
+.mcq label{min-height:44px}
+select,input[type=text]{min-height:44px}
+
+/* iOS momentum scrolling for all scrollable regions */
+nav.tabs,.tbl-wrap,.tlist,.joinviz .out{-webkit-overflow-scrolling:touch}
+
+/* Class diagrams: horizontal scroll instead of wrapping broken */
+.cd{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* Schema block: horizontal scroll */
+.schema{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* Kardinalitäten grid: replace fixed 150px column with flexible auto */
+.cardq{grid-template-columns:1fr auto 30px}
+
+/* Pre code blocks scrollable */
+pre{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ---- Small screens (≤ 599px) ---- */
+@media(max-width:599px){
+  header.top{padding:10px 14px 0}
+  .brand{gap:4px 10px}
+  .brand h1{font-size:1.2rem}
+  .brand .sub{font-size:1.1rem}
+  .progress{margin-left:0;flex-basis:100%;justify-content:flex-end;padding-bottom:6px}
+  .pbar{width:90px}
+  nav.tabs button{font-size:.82rem;padding:7px 10px 8px}
+  main{padding:8px 12px 60px}
+  h2{font-size:1.4rem}
+  h3{font-size:1.15rem}
+  .cardq{grid-template-columns:1fr auto auto;gap:6px 8px}
+  .cheat{columns:1}
+  .cheat pre{font-size:.8rem}
+  .tlist{max-height:220px}
+  .cards{grid-template-columns:1fr}
+  .plan li{padding-left:46px}
+  .plan li::before{width:32px;height:32px}
+  .pop{padding:8px}
+  .pop .box{padding:10px 14px 16px}
+  .ka-head{padding:8px 12px;gap:8px}
+  .ka-head .timer{font-size:1.1rem}
+  .ka-task{padding:6px 14px 14px}
+  table.data td,table.data th{padding:3px 7px;font-size:.82rem}
+  .cd{flex-wrap:nowrap}
+  .cd .cls{min-width:110px;flex-shrink:0}
+  .cd .rel{min-width:100px;flex-shrink:0}
+  .joinviz{padding:10px 12px}
+  .chapter{padding:4px 12px 16px}
+  .task{padding:12px 14px 16px}
+  textarea.editor,textarea.answer{min-height:100px}
+}
+
+/* ---- Very small screens (≤ 400px) ---- */
+@media(max-width:400px){
+  .brand h1{font-size:1.05rem}
+  .brand .sub{font-size:1rem}
+  nav.tabs button{font-size:.75rem;padding:6px 8px 7px}
+  h2{font-size:1.25rem}
+  h3{font-size:1.05rem}
+  .cardq{grid-template-columns:1fr auto;gap:4px 6px}
+  .cardq select{grid-column:1}
+  .cardq .mark{grid-column:2;grid-row:1 / span 2;align-self:center}
+  main{padding:6px 10px 60px}
+}
 </style>
 </head>
 <body>
