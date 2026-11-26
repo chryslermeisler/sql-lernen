@@ -2592,7 +2592,8 @@ const ICON = { self: ['✅', 'selbst gelöst'], help: ['💡', 'mit Tipp oder L�
 const againList = () => EXERCISES.filter(e => ['help', 'tried'].includes(status(e.id)));
 function updProgress() {
   const self = EXERCISES.filter(e => status(e.id) === 'self').length, help = EXERCISES.filter(e => status(e.id) === 'help').length;
-  $('#progText').textContent = self + ' von ' + EXERCISES.length + ' selbst gelöst' + (help ? ' (+' + help + ' mit Hilfe)' : '');
+  $('#progText').textContent = (self + help) + ' von ' + EXERCISES.length + ' gelöst' + (help ? ' (davon ' + help + ' mit Hilfe 💡)' : '');
+  $('#progText').parentNode.title = self + ' ganz allein gelöst ✅, ' + help + ' mit Tipp oder Lösung 💡. Aufgaben mit 💡 findest du im SQL-Trainer unter „Nochmal üben“.';
   $('#progBar').style.width = (100 * self / EXERCISES.length) + '%';
   $('#progBar2').style.width = (100 * help / EXERCISES.length) + '%';
   $('#cardTrainer').textContent = EXERCISES.length + ' Aufgaben mit automatischer Kontrolle, Tipps und Musterlösungen. Du hast ' + self + ' selbst gelöst' + (help ? ' und ' + help + ' mit Hilfe' : '') + '.';
@@ -2614,7 +2615,7 @@ function renderList() {
   }
   const ag = againList();
   if (ag.length) h += '<h4>Nochmal üben <span class="rowcount">' + ag.length + '</span></h4><div class="blitzbar">Hier landen Aufgaben, die du nur mit Hilfe oder noch gar nicht geschafft hast.</div>' + ag.map(itemBtn).join('');
-  h += cats.map(c => { const list = EXERCISES.filter(e => e.cat === c); const done = list.filter(e => status(e.id) === 'self').length; return '<h4>' + esc(c) + ' <span class="rowcount">' + done + '/' + list.length + '</span></h4>' + list.map(itemBtn).join(''); }).join('');
+  h += cats.map(c => { const list = EXERCISES.filter(e => e.cat === c); const done = list.filter(e => ['self', 'help'].includes(status(e.id))).length; return '<h4>' + esc(c) + ' <span class="rowcount">' + done + '/' + list.length + '</span></h4>' + list.map(itemBtn).join(''); }).join('');
   el.innerHTML = h; el.scrollTop = st;
   $('#blitzBtn').onclick = startBlitz;
   $$('button[data-ex]', el).forEach(b => b.onclick = () => { openExercise(b.dataset.ex); if (window.innerWidth < 900) $('#tpanel').scrollIntoView(); });
