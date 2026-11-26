@@ -223,34 +223,38 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 10px}
   .cheat{columns:2}
   .cheat .blk{border:1px solid #999}
 }
-  /* ============================================================
-   MOBILE-FIRST RESPONSIVE IMPROVEMENTS
-   ============================================================ */
 
-/* Touch-friendly tap targets (global, 44px min per WCAG) */
+/* responsive additions */
+
+/* touch tap targets */
 .btn{min-height:44px}
 .btn.small{min-height:36px}
-nav.tabs button{min-height:44px}
-.tlist button{min-height:44px}
-.mcq label{min-height:44px}
-select,input[type=text]{min-height:44px}
+nav.tabs button,.tlist button,.mcq label,select,input[type=text]{min-height:44px}
 
-/* iOS momentum scrolling for all scrollable regions */
-nav.tabs,.tbl-wrap,.tlist,.joinviz .out{-webkit-overflow-scrolling:touch}
+/* scrollable regions */
+nav.tabs,.tbl-wrap,.tlist,.joinviz .out,.cd,.schema,pre{
+  -webkit-overflow-scrolling:touch;
+}
+.cd{overflow-x:auto}
+.schema{overflow-x:auto}
+pre{overflow-x:auto}
 
-/* Class diagrams: horizontal scroll instead of wrapping broken */
-.cd{overflow-x:auto;-webkit-overflow-scrolling:touch}
-
-/* Schema block: horizontal scroll */
-.schema{overflow-x:auto;-webkit-overflow-scrolling:touch}
-
-/* Kardinalitäten grid: replace fixed 150px column with flexible auto */
+/* grid tracks use minmax(0,1fr) so content can't widen the page */
 .cardq{grid-template-columns:minmax(0,1fr) auto 30px}
 
-/* Pre code blocks scrollable */
-pre{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* bare tables (no .tbl-wrap parent) scroll independently */
+:not(.tbl-wrap) > table.data{
+  display:block;
+  overflow-x:auto;
+  max-width:100%;
+  -webkit-overflow-scrolling:touch;
+}
 
-/* ---- Small screens (≤ 599px) ---- */
+/* prevent long tokens from forcing page overflow */
+p,li,td,th,.warn,.tip,.merke,.note,.chapter,.task{overflow-wrap:break-word}
+.chapter p[style*="font-family"]{word-break:break-word}
+.tables-row{max-width:100%}
+
 @media(max-width:599px){
   header.top{padding:10px 14px 0}
   .brand{gap:4px 10px}
@@ -282,9 +286,9 @@ pre{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .chapter{padding:4px 12px 16px}
   .task{padding:12px 14px 16px}
   textarea.editor,textarea.answer{min-height:100px}
+  .tables-row>pre{min-width:0!important;flex-basis:100%}
 }
 
-/* ---- Very small screens (≤ 400px) ---- */
 @media(max-width:400px){
   .brand h1{font-size:1.05rem}
   .brand .sub{font-size:1rem}
@@ -295,41 +299,6 @@ pre{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .cardq select{grid-column:1}
   .cardq .mark{grid-column:2;grid-row:1 / span 2;align-self:center}
   main{padding:6px 10px 60px}
-}
-
-/* ============================================================
-   LERNEN + RÜCKBLICK: REMAINING OVERFLOW FIXES
-   ============================================================ */
-
-/* K4, K6, K9, R2, R3, R4 and other bare tables not inside .tbl-wrap:
-   make them independently scrollable so they never push the body wider. */
-:not(.tbl-wrap) > table.data{
-  display:block;
-  overflow-x:auto;
-  max-width:100%;
-  -webkit-overflow-scrolling:touch;
-}
-
-/* Global overflow-wrap safety net: prevents any single long token
-   (URL, SQL keyword run, schema name) from forcing page-level overflow.
-   Only activates when there is no other break opportunity. */
-p,li,td,th,.warn,.tip,.merke,.note,.chapter,.task{
-  overflow-wrap:break-word;
-}
-
-/* Monospace schema paragraphs (K5 Kunde/Artikel/Bestellung,
-   K7 Messstation, K8 Nutzer/Gruppe): allow line-break anywhere needed */
-.chapter p[style*="font-family"]{
-  overflow-wrap:break-word;
-  word-break:break-word;
-}
-
-/* tables-row: cap to container so flex items can't widen the page */
-.tables-row{max-width:100%}
-
-/* R4 inline pre next to table: release forced min-width on small screens */
-@media(max-width:599px){
-  .tables-row>pre{min-width:0!important;flex-basis:100%}
 }
 </style>
 </head>
