@@ -54,7 +54,7 @@ main{max-width:1180px;margin:0 auto;padding:10px 20px 80px}
 section.view{display:none} section.view.active{display:block}
 
 /* ---------- Layout Lernen ---------- */
-.with-side{display:grid;grid-template-columns:230px 1fr;gap:30px;align-items:start}
+.with-side{display:grid;grid-template-columns:230px minmax(0,1fr);gap:30px;align-items:start}
 .side{position:sticky;top:12px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px}
 .side a{display:block;text-decoration:none;padding:6px 8px;border-radius:6px;color:var(--graphite);font-size:.95rem}
 .side a:hover{background:var(--ink-pale)}
@@ -63,7 +63,7 @@ section.view{display:none} section.view.active{display:block}
 .chapter{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 28px 24px;margin-bottom:26px}
 .chapter>h2{border-bottom:3px solid var(--ink);padding-bottom:6px}
 .chapter>h2 .no{display:inline-block;background:var(--ink);color:#fff;border-radius:6px;padding:0 9px;margin-right:8px;font-size:1.1rem;vertical-align:3px}
-@media (max-width:860px){.with-side{grid-template-columns:1fr}.side{position:static;display:flex;flex-wrap:wrap;gap:4px}.side .grp{width:100%}.chapter{padding:4px 16px 18px}}
+@media (max-width:860px){.with-side{grid-template-columns:minmax(0,1fr)}.side{position:static;display:flex;flex-wrap:wrap;gap:4px}.side .grp{width:100%}.chapter{padding:4px 16px 18px}}
 
 /* Merkkasten, Notizen */
 .merke{background:var(--marker-pale);border:2px solid var(--marker);border-radius:8px;padding:10px 16px;margin:16px 0}
@@ -127,7 +127,7 @@ textarea.answer{width:100%;min-height:90px;font:inherit;padding:8px 10px;border:
 .rowcount{font-size:.85rem;color:var(--muted)}
 
 /* Trainer */
-.trainer{display:grid;grid-template-columns:290px 1fr;gap:24px;align-items:start}
+.trainer{display:grid;grid-template-columns:290px minmax(0,1fr);gap:24px;align-items:start}
 .tlist{background:#fff;border:1px solid var(--line);border-radius:8px;max-height:calc(100vh - 40px);overflow:auto;position:sticky;top:12px}
 .tlist h4{margin:0;padding:9px 12px 4px;font-size:.92rem;color:var(--ink);background:#fff;position:sticky;top:0;border-bottom:1px solid var(--line)}
 .tlist button{display:flex;gap:8px;width:100%;text-align:left;font:inherit;font-size:.9rem;border:0;background:none;padding:6px 12px;cursor:pointer;color:var(--graphite);align-items:flex-start}
@@ -148,7 +148,7 @@ textarea.answer{width:100%;min-height:90px;font:inherit;padding:8px 10px;border:
 .hints .hint{background:var(--marker-pale);border-radius:6px;padding:7px 12px;margin:6px 0}
 .solution{border:2px solid var(--green);border-radius:8px;padding:6px 14px;margin:10px 0;background:#fff}
 .explain{margin:6px 0}
-@media (max-width:900px){.trainer{grid-template-columns:1fr}.tlist{position:static;max-height:300px}}
+@media (max-width:900px){.trainer{grid-template-columns:minmax(0,1fr)}.tlist{position:static;max-height:300px}}
 
 /* Quiz */
 .mcq{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 18px;margin:12px 0}
@@ -173,7 +173,7 @@ textarea.answer{width:100%;min-height:90px;font:inherit;padding:8px 10px;border:
 .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center;margin:22px 0 10px}
 .hero h2{font-size:2.1rem;margin:0 0 .3em}
 .hero p{font-size:1.1rem}
-@media (max-width:860px){.hero{grid-template-columns:1fr}}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr)}}
 
 /* Join-Visualisierung */
 .joinviz{background:#fff;border:2px solid var(--ink);border-radius:10px;padding:12px 18px;margin:16px 0}
@@ -183,7 +183,7 @@ textarea.answer{width:100%;min-height:90px;font:inherit;padding:8px 10px;border:
 .joinviz .out{max-height:420px;overflow:auto}
 
 /* Kardinalitäten */
-.cardq{display:grid;grid-template-columns:1fr 150px 30px;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px dashed var(--line)}
+.cardq{display:grid;grid-template-columns:minmax(0,1fr) 150px 30px;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px dashed var(--line)}
 .cardq .why{grid-column:1/-1;font-size:.92rem;color:var(--muted);display:none}
 .cardq.checked .why{display:block}
 .cardq .mark{font-weight:700;font-size:1.2rem}
@@ -222,6 +222,83 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 10px}
   section.view{display:none!important} section.view.printme{display:block!important}
   .cheat{columns:2}
   .cheat .blk{border:1px solid #999}
+}
+
+/* responsive additions */
+
+/* touch tap targets */
+.btn{min-height:44px}
+.btn.small{min-height:36px}
+nav.tabs button,.tlist button,.mcq label,select,input[type=text]{min-height:44px}
+
+/* scrollable regions */
+nav.tabs,.tbl-wrap,.tlist,.joinviz .out,.cd,.schema,pre{
+  -webkit-overflow-scrolling:touch;
+}
+.cd{overflow-x:auto}
+.schema{overflow-x:auto}
+pre{overflow-x:auto}
+
+/* grid tracks use minmax(0,1fr) so content can't widen the page */
+.cardq{grid-template-columns:minmax(0,1fr) auto 30px}
+
+/* bare tables (no .tbl-wrap parent) scroll independently */
+:not(.tbl-wrap) > table.data{
+  display:block;
+  overflow-x:auto;
+  max-width:100%;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* prevent long tokens from forcing page overflow */
+p,li,td,th,.warn,.tip,.merke,.note,.chapter,.task{overflow-wrap:break-word}
+.chapter p[style*="font-family"]{word-break:break-word}
+.tables-row{max-width:100%}
+
+@media(max-width:599px){
+  header.top{padding:10px 14px 0}
+  .brand{gap:4px 10px}
+  .brand h1{font-size:1.2rem}
+  .brand .sub{font-size:1.1rem}
+  .progress{margin-left:0;flex-basis:100%;justify-content:flex-end;padding-bottom:6px}
+  .pbar{width:90px}
+  nav.tabs button{font-size:.82rem;padding:7px 10px 8px}
+  main{padding:8px 12px 60px}
+  h2{font-size:1.4rem}
+  h3{font-size:1.15rem}
+  .cardq{grid-template-columns:minmax(0,1fr) auto auto;gap:6px 8px}
+  .cheat{columns:1}
+  .cheat pre{font-size:.8rem}
+  .tlist{max-height:220px}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .plan li{padding-left:46px}
+  .plan li::before{width:32px;height:32px}
+  .pop{padding:8px}
+  .pop .box{padding:10px 14px 16px}
+  .ka-head{padding:8px 12px;gap:8px}
+  .ka-head .timer{font-size:1.1rem}
+  .ka-task{padding:6px 14px 14px}
+  table.data td,table.data th{padding:3px 7px;font-size:.82rem}
+  .cd{flex-wrap:nowrap}
+  .cd .cls{min-width:110px;flex-shrink:0}
+  .cd .rel{min-width:100px;flex-shrink:0}
+  .joinviz{padding:10px 12px}
+  .chapter{padding:4px 12px 16px}
+  .task{padding:12px 14px 16px}
+  textarea.editor,textarea.answer{min-height:100px}
+  .tables-row>pre{min-width:0!important;flex-basis:100%}
+}
+
+@media(max-width:400px){
+  .brand h1{font-size:1.05rem}
+  .brand .sub{font-size:1rem}
+  nav.tabs button{font-size:.75rem;padding:6px 8px 7px}
+  h2{font-size:1.25rem}
+  h3{font-size:1.05rem}
+  .cardq{grid-template-columns:minmax(0,1fr) auto;gap:4px 6px}
+  .cardq select{grid-column:1}
+  .cardq .mark{grid-column:2;grid-row:1 / span 2;align-self:center}
+  main{padding:6px 10px 60px}
 }
 </style>
 </head>
